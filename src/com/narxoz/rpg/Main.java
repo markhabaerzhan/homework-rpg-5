@@ -14,12 +14,23 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("=== Homework 5 Demo: Decorator + Facade ===\n");
 
-        // TODO: Create a hero and a boss with your own meaningful stats.
-        HeroProfile hero = new HeroProfile("TODO Hero", 100);
-        BossEnemy boss = new BossEnemy("TODO Boss", 120, 15);
+        HeroProfile hero = new HeroProfile("Knight", 120);
+        BossEnemy boss = new BossEnemy("Dragon", 150, 18);
 
-        // TODO: Start with a base action and then create several decorated versions.
-        AttackAction basic = new BasicAttack("Strike", 10);
+        AttackAction basic = new BasicAttack("Sword Slash", 20);
+
+        AttackAction fireAttack =
+                new FireRuneDecorator(basic);
+        AttackAction poisonFireAttack =
+                new PoisonCoatingDecorator(
+                        new FireRuneDecorator(basic)
+                );
+        AttackAction ultimateAttack =
+                new CriticalFocusDecorator(
+                        new PoisonCoatingDecorator(
+                                new FireRuneDecorator(basic)
+                        )
+                );
         AttackAction enhanced = new FireRuneDecorator(
                 new PoisonCoatingDecorator(
                         new CriticalFocusDecorator(basic)
@@ -31,11 +42,16 @@ public class Main {
         System.out.println("Base damage: " + basic.getDamage());
         System.out.println("Base effects: " + basic.getEffectSummary());
         System.out.println();
+        System.out.println("Fire attack damage: " + fireAttack.getDamage());
+        System.out.println("Poison + Fire damage: " + poisonFireAttack.getDamage());
+        System.out.println();
+        System.out.println("Ultimate Attack (Fire + Poison + Critical):");
+        System.out.println("Damage: " + ultimateAttack.getDamage());
+        System.out.println("Effects: " + ultimateAttack.getEffectSummary());
+        System.out.println();
         System.out.println("Enhanced action: " + enhanced.getActionName());
         System.out.println("Enhanced damage: " + enhanced.getDamage());
         System.out.println("Enhanced effects: " + enhanced.getEffectSummary());
-
-        // TODO: Replace the placeholder preview above with richer proof of runtime composition.
 
         System.out.println("\n--- Facade Preview ---");
         DungeonFacade facade = new DungeonFacade().setRandomSeed(42L);
@@ -47,12 +63,6 @@ public class Main {
         for (String line : result.getLog()) {
             System.out.println(line);
         }
-
-        // TODO: Expand this demo so it clearly proves:
-        // 1) multiple decorator combinations
-        // 2) one full dungeon run through the facade
-        // 3) readable final summary
-
         System.out.println("\n=== Demo Complete ===");
     }
 }
