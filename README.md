@@ -54,6 +54,14 @@ homework-rpg-5/
 ├── STUDENT_CHECKLIST.md
 └── README.md
 ```
+### Decorator
+![Decorator](diagrams/DecoratorPattern.png)
+
+### Facade
+![Facade](diagrams/FacadePattern.png)
+
+### Ссылка на код
+https://github.com/markhabaerzhan/homework-rpg-5.git
 
 ## Deliverables
 - Completed Java code
